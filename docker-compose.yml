@@ -1,0 +1,8 @@
+tomcat:
+  image: tomcat
+  volumes:
+    - ./target/myapp.war:/usr/local/tomcat/webapps/myapp.war
+    - ./.docker/tomcat/tomcat-users.xml:/usr/local/tomcat/conf/tomcat-users.xml
+    - ./.docker/tomcat/context.xml:/tmp/context.xml
+  ports:
+    - '8082:8080'
