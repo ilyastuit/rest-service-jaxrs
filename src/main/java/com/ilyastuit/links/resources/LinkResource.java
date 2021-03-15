@@ -18,27 +18,23 @@ public class LinkResource {
     @Produces(MediaType.TEXT_PLAIN)
     @Path("{id}")
     public Response getUrlById(final @PathParam("id") String id) {
-        return Response.ok("sdfsasdfasdfads").build();
+        if (id == null || id.isEmpty()) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+        final String url = links.get(id);
+        if (url == null) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
 
-//        links.put(String.valueOf(1), "asdasdasdsad");
-//        if (id == null || id.isEmpty()) {
-//            return Response.status(Response.Status.NOT_FOUND).build();
-//        }
-//        final String url = links.get(id);
-//        if (url == null) {
-//            return Response.status(Response.Status.NOT_FOUND).build();
-//        }
-//
-//        return Response.ok(url).build();
+        return Response.ok(url).build();
     }
 
-    @POST
+    @PUT
     @Consumes(MediaType.TEXT_PLAIN)
     @Produces(MediaType.TEXT_PLAIN)
-    @Path("add")
     public Response shortUrl(final String url) {
         final int id = currentId.getAndIncrement();
         links.put(String.valueOf(id), url);
-        return Response.ok(id).build();
+        return Response.ok(String.valueOf(id)).build();
     }
 }
