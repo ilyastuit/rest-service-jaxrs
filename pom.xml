@@ -15,11 +15,16 @@
     </properties>
 
     <dependencies>
-               <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-war-plugin -->
+
         <dependency>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-war-plugin</artifactId>
             <version>3.3.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.mongodb</groupId>
+            <artifactId>mongo-java-driver</artifactId>
+            <version>3.4.2</version>
         </dependency>
         <dependency>
             <groupId>com.sun.jersey</groupId>
@@ -36,7 +41,6 @@
             <artifactId>jersey-core</artifactId>
             <version>1.19.4</version>
         </dependency>
-
 
     </dependencies>
 

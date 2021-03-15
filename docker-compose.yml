@@ -5,9 +5,28 @@ services:
     build:
       context: ./
       dockerfile: ./.docker/tomcat/Dockerfile
+    container_name: "tomcat"
     volumes:
-    - "./.docker/tomcat/tomcat-users.xml:/usr/local/tomcat/conf/tomcat-users.xml"
-    - "./.docker/tomcat/context.xml:/usr/local/tomcat/webapps/manager/META-INF/context.xml"
-    - "./target/myapp.war:/usr/local/tomcat/webapps/myapp.war"
+    - ./.docker/tomcat/tomcat-users.xml:/usr/local/tomcat/conf/tomcat-users.xml
+    - ./.docker/tomcat/context.xml:/usr/local/tomcat/webapps/manager/META-INF/context.xml
+    - ./target/myapp.war:/usr/local/tomcat/webapps/myapp.war
     ports:
       - '8082:8080'
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    hostname: mongodb
+    volumes:
+      - ./.docker/mongodb/mongod.conf:/etc/mongod.conf
+      - ./.docker/mongodb/initdb.d/:/docker-entrypoint-initdb.d/
+      - ./.docker/mongodb/data/db/:/data/db/
+      - ./.docker/mongodb/data/log/:/var/log/mongodb/
+    env_file:
+      - ./.docker/mongodb/.env
+    environment:
+      - "MONGO_INITDB_ROOT_USERNAME:admin"
+      - "MONGO_INITDB_ROOT_PASSWORD:password"
+      - "MONGO_INITDB_DATABASE:links"
+    ports:
+      - "27017:27017"
+    command: [ "-f", "/etc/mongod.conf" ]
